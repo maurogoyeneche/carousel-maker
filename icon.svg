@@ -4,45 +4,46 @@
       <stop offset="0%" stop-color="#2a1f0e"/>
       <stop offset="100%" stop-color="#0d0b08"/>
     </linearGradient>
-    <clipPath id="bounds">
-      <rect width="512" height="512"/>
-    </clipPath>
+    <linearGradient id="slideGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2a2520"/>
+      <stop offset="100%" stop-color="#1a1610"/>
+    </linearGradient>
   </defs>
 
   <rect width="512" height="512" fill="url(#bg)"/>
 
-  <!-- left slide peeking -->
-  <rect x="-30" y="96" width="200" height="320" rx="16" fill="#1e1a12" clip-path="url(#bounds)"/>
-  <rect x="-30" y="96" width="200" height="8" rx="8" fill="#7a6540" clip-path="url(#bounds)"/>
+  <!-- left slide -->
+  <rect x="30" y="110" width="200" height="300" rx="14" fill="#1e1a12"/>
+  <rect x="30" y="110" width="200" height="8" rx="7" fill="#7a6540"/>
 
-  <!-- right slide peeking -->
-  <rect x="342" y="96" width="200" height="320" rx="16" fill="#1e1a12" clip-path="url(#bounds)"/>
-  <rect x="342" y="96" width="200" height="8" rx="8" fill="#7a6540" clip-path="url(#bounds)"/>
+  <!-- right slide -->
+  <rect x="282" y="110" width="200" height="300" rx="14" fill="#1e1a12"/>
+  <rect x="282" y="110" width="200" height="8" rx="7" fill="#7a6540"/>
+
+  <!-- center slide shadow -->
+  <rect x="96" y="66" width="320" height="384" rx="20" fill="#000" opacity="0.4"/>
 
   <!-- center slide -->
-  <rect x="86" y="72" width="340" height="368" rx="20" fill="#221e14"/>
-  <!-- gold top bar -->
-  <rect x="86" y="72" width="340" height="12" rx="10" fill="#c8a96e"/>
+  <rect x="90" y="60" width="332" height="384" rx="20" fill="url(#slideGrad)"/>
 
-  <!-- top half: gray text lines -->
-  <rect x="118" y="120" width="276" height="14" rx="7" fill="#3e3830"/>
-  <rect x="118" y="148" width="210" height="14" rx="7" fill="#2e2a22"/>
-  <rect x="118" y="176" width="250" height="14" rx="7" fill="#3e3830"/>
+  <!-- gold top bar — thick and visible -->
+  <rect x="90" y="60" width="332" height="16" rx="12" fill="#c8a96e"/>
 
-  <!-- divider -->
-  <rect x="86" y="256" width="340" height="2" fill="#332e22"/>
+  <!-- top half: visible gray lines -->
+  <rect x="118" y="108" width="276" height="16" rx="8" fill="#666"/>
+  <rect x="118" y="138" width="210" height="16" rx="8" fill="#555"/>
+  <rect x="118" y="168" width="246" height="16" rx="8" fill="#666"/>
 
-  <!-- bottom half: gold text lines -->
-  <rect x="118" y="282" width="276" height="16" rx="8" fill="#c8a96e"/>
-  <rect x="118" y="312" width="210" height="16" rx="8" fill="#c8a96e" opacity="0.65"/>
-  <rect x="118" y="342" width="250" height="16" rx="8" fill="#c8a96e" opacity="0.4"/>
+  <!-- center divider -->
+  <rect x="90" y="252" width="332" height="2" fill="#c8a96e" opacity="0.5"/>
 
-  <!-- nav dots -->
-  <circle cx="236" cy="418" r="9" fill="#c8a96e"/>
-  <circle cx="260" cy="418" r="6" fill="#3a3025"/>
-  <circle cx="280" cy="418" r="6" fill="#3a3025"/>
+  <!-- bottom half: bright gold lines -->
+  <rect x="118" y="272" width="276" height="18" rx="9" fill="#c8a96e"/>
+  <rect x="118" y="306" width="210" height="18" rx="9" fill="#c8a96e" opacity="0.65"/>
+  <rect x="118" y="340" width="246" height="18" rx="9" fill="#c8a96e" opacity="0.4"/>
 
-  <!-- label -->
-  <text x="256" y="470" font-family="Arial, sans-serif" font-size="36" font-weight="700" fill="#c8a96e" text-anchor="middle" letter-spacing="2">CAROUSEL</text>
-  <text x="256" y="500" font-family="Arial, sans-serif" font-size="22" font-weight="300" fill="#7a6540" text-anchor="middle" letter-spacing="4">MAKER</text>
+  <!-- nav dots — centered and clear -->
+  <circle cx="246" cy="408" r="10" fill="#c8a96e"/>
+  <circle cx="272" cy="408" r="7" fill="#4a4035"/>
+  <circle cx="294" cy="408" r="7" fill="#4a4035"/>
 </svg>
