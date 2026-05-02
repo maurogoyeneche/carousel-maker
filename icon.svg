@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#0a0a0a"/>
+  <!-- back slide -->
+  <rect x="148" y="108" width="186" height="232" rx="14" fill="#1c1c1c"/>
+  <!-- mid slide -->
+  <rect x="163" y="126" width="186" height="232" rx="14" fill="#222"/>
+  <!-- front slide -->
+  <rect x="178" y="144" width="186" height="232" rx="14" fill="#2a2a2a"/>
+  <!-- gold top bar -->
+  <rect x="178" y="144" width="186" height="6" rx="3" fill="#c8a96e"/>
+  <!-- text lines -->
+  <rect x="198" y="176" width="146" height="8" rx="4" fill="#444"/>
+  <rect x="198" y="194" width="106" height="8" rx="4" fill="#444"/>
+  <!-- gold divider -->
+  <rect x="178" y="258" width="186" height="1" fill="#333"/>
+  <!-- color lines -->
+  <rect x="198" y="280" width="146" height="10" rx="5" fill="#c8a96e" opacity="0.9"/>
+  <rect x="198" y="300" width="106" height="10" rx="5" fill="#c8a96e" opacity="0.6"/>
+  <!-- dots nav -->
+  <circle cx="237" cy="402" r="7" fill="#c8a96e"/>
+  <circle cx="256" cy="402" r="5" fill="#444"/>
+  <circle cx="273" cy="402" r="5" fill="#444"/>
+</svg>
