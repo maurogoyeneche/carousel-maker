@@ -63,7 +63,7 @@
         font-size: 0.65rem;
         letter-spacing: 4px;
         text-transform: uppercase;
-        color: #444;
+        color: #888;
         font-weight: 300;
         font-style: italic;
         margin-top: 10px;
@@ -74,6 +74,33 @@
         text-transform: uppercase;
         color: #444;
         font-weight: 300;
+      }
+      .section {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      .section-divider {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin: 40px 0 24px;
+        padding: 0 16px;
+      }
+      .section-divider span {
+        font-size: 0.5rem;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: #555;
+        white-space: nowrap;
+        font-weight: 300;
+      }
+      .section-divider::before,
+      .section-divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: #222;
       }
       .grid {
         display: flex;
@@ -241,44 +268,61 @@
   </head>
   <body>
     <div class="header">
-      <div class="logo">Bar<span>bero</span></div>
-      <div class="tagline">Generador de carruseles</div>
+      <div class="logo">Carousel<span> Maker</span></div>
+      <div class="tagline">Generador de imágenes</div>
     </div>
-    <div class="label">Elegí un formato</div>
-    <div class="grid">
-      <a class="card" href="editor.html">
-        <div class="preview preview-split">
-          <div class="half-bw">
-            <span class="txt-bw">Solo tengo<br />una tijera</span>
+    <div class="section">
+      <div class="section-divider"><span>Split B&amp;W + Color</span></div>
+      <div class="grid">
+        <a class="card" href="editor.html">
+          <div class="preview preview-split">
+            <div class="half-bw">
+              <span class="txt-bw">Solo tengo<br />una tijera</span>
+            </div>
+            <div class="half-color">
+              <span class="txt-color">Tengo una<br />herramienta</span>
+            </div>
           </div>
-          <div class="half-color">
-            <span class="txt-color">Tengo una<br />herramienta</span>
+          <div class="card-body">
+            <div class="card-title">Split B&amp;W + Color</div>
+            <div class="card-desc">
+              Dos frases: una en blanco y negro arriba, otra a color abajo.
+            </div>
+            <span class="btn-open">Abrir editor →</span>
           </div>
-        </div>
-        <div class="card-body">
-          <div class="card-title">Split B&amp;W + Color</div>
-          <div class="card-desc">
-            Dos frases: una en blanco y negro arriba, otra a color abajo.
-          </div>
-          <span class="btn-open">Abrir editor →</span>
-        </div>
-      </a>
+        </a>
+      </div>
 
-      <a class="card" href="editor2.html">
-        <div class="preview preview-libre">
-          <div class="txt-libre">
-            Tengo una<br />herramienta<br />para crecer
+      <div class="section-divider"><span>Texto libre</span></div>
+      <div class="grid">
+        <a class="card" href="editor2.html">
+          <div class="preview preview-libre">
+            <div class="txt-libre">
+              Tengo una<br />herramienta<br />para crecer
+            </div>
           </div>
-        </div>
-        <div class="card-body">
-          <div class="card-title">Texto libre</div>
-          <div class="card-desc">
-            Una frase posicionable sobre foto o fondo de color.
+          <div class="card-body">
+            <div class="card-title">Texto libre</div>
+            <div class="card-desc">
+              Una frase posicionable sobre foto o fondo de color.
+            </div>
+            <span class="btn-open">Abrir editor →</span>
           </div>
-          <span class="btn-open">Abrir editor →</span>
-        </div>
-      </a>
+        </a>
+      </div>
     </div>
-  <footer style="text-align:center;padding:24px 0 32px;font-size:0.5rem;letter-spacing:3px;text-transform:uppercase;color:#333;font-family:'Josefin Sans',sans-serif;">powered by <span style="color:#c8a96e">magodev</span></footer>
+    <footer
+      style="
+        text-align: center;
+        padding: 24px 0 32px;
+        font-size: 0.5rem;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: #333;
+        font-family: &quot;Josefin Sans&quot;, sans-serif;
+      "
+    >
+      powered by <span style="color: #c8a96e">magodev</span>
+    </footer>
   </body>
 </html>
