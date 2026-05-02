@@ -31,6 +31,19 @@ body {
   color: var(--white);
   min-height: 100vh;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 24px;
+  gap: 48px;
+}
+
+/* c*.html y editor tienen su propio contenedor; reseteamos el flex del body para ellos */
+body:has(.stage),
+body:has(.editor-layout) {
+  display: block;
+  padding: 0;
+  gap: 0;
 }
 
 body::before {
@@ -309,6 +322,52 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #0f0f0f;
+  position: relative;
+  overflow: hidden;
+}
+
+.badge {
+  font-size: 0.55rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--accent);
+  text-align: center;
+  padding: 0 16px;
+}
+
+.num {
+  position: absolute;
+  bottom: 10px;
+  right: 14px;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1;
+}
+
+.card-body {
+  padding: 20px 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card-title {
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.card-arrow {
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 300;
 }
 
 /* EDITOR */

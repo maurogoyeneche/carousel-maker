@@ -1,0 +1,99 @@
+<h2>Imagen completa — posiciones de texto</h2>
+<p class="subtitle">El texto puede ir en cualquiera de estas 9 posiciones. En el editor elegís dónde y cómo alinearlo.</p>
+
+<style>
+.grid9 { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; max-width:600px; margin:20px auto; }
+.pos-card { cursor:pointer; border-radius:8px; overflow:hidden; border:2px solid #1f1f1f; transition:border-color 0.2s; background:#0a0a0a; }
+.pos-card:hover { border-color:#c8a96e88; }
+.pos-card.selected { border-color:#c8a96e; }
+.slide {
+  aspect-ratio:4/5;
+  background:linear-gradient(160deg,#4a2e10,#6a4020,#3a2010);
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  padding:14px;
+}
+.slide::after {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.42);
+}
+.slide .txt {
+  position:relative;
+  z-index:1;
+  color:#fff;
+  font-size:7px;
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  line-height:1.5;
+  max-width:80%;
+}
+.pos-label { font-size:9px; letter-spacing:2px; text-transform:uppercase; color:#555; text-align:center; padding:6px 0; }
+
+/* Vertical */
+.top    { align-items:flex-start; }
+.middle { align-items:center; }
+.bottom { align-items:flex-end; }
+/* Horizontal */
+.left   { justify-content:flex-start; }
+.center { justify-content:center; }
+.right  { justify-content:flex-end; }
+/* Text align */
+.left .txt   { text-align:left; }
+.center .txt { text-align:center; }
+.right .txt  { text-align:right; }
+</style>
+
+<div class="grid9">
+
+  <div class="pos-card" onclick="toggleSelect(this)" data-choice="top-left">
+    <div class="slide top left"><span class="txt">Tengo una herramienta para cambiar mi futuro</span></div>
+    <div class="pos-label">↖ Arriba izq</div>
+  </div>
+
+  <div class="pos-card" onclick="toggleSelect(this)" data-choice="top-center">
+    <div class="slide top center"><span class="txt">Tengo una herramienta para cambiar mi futuro</span></div>
+    <div class="pos-label">↑ Arriba centro</div>
+  </div>
+
+  <div class="pos-card" onclick="toggleSelect(this)" data-choice="top-right">
+    <div class="slide top right"><span class="txt">Tengo una herramienta para cambiar mi futuro</span></div>
+    <div class="pos-label">↗ Arriba der</div>
+  </div>
+
+  <div class="pos-card" onclick="toggleSelect(this)" data-choice="middle-left">
+    <div class="slide middle left"><span class="txt">Tengo una herramienta para cambiar mi futuro</span></div>
+    <div class="pos-label">← Centro izq</div>
+  </div>
+
+  <div class="pos-card" onclick="toggleSelect(this)" data-choice="middle-center">
+    <div class="slide middle center"><span class="txt">Tengo una herramienta para cambiar mi futuro</span></div>
+    <div class="pos-label">· Centro</div>
+  </div>
+
+  <div class="pos-card" onclick="toggleSelect(this)" data-choice="middle-right">
+    <div class="slide middle right"><span class="txt">Tengo una herramienta para cambiar mi futuro</span></div>
+    <div class="pos-label">→ Centro der</div>
+  </div>
+
+  <div class="pos-card" onclick="toggleSelect(this)" data-choice="bottom-left">
+    <div class="slide bottom left"><span class="txt">Tengo una herramienta para cambiar mi futuro</span></div>
+    <div class="pos-label">↙ Abajo izq</div>
+  </div>
+
+  <div class="pos-card" onclick="toggleSelect(this)" data-choice="bottom-center">
+    <div class="slide bottom center"><span class="txt">Tengo una herramienta para cambiar mi futuro</span></div>
+    <div class="pos-label">↓ Abajo centro</div>
+  </div>
+
+  <div class="pos-card" onclick="toggleSelect(this)" data-choice="bottom-right">
+    <div class="slide bottom right"><span class="txt">Tengo una herramienta para cambiar mi futuro</span></div>
+    <div class="pos-label">↘ Abajo der</div>
+  </div>
+
+</div>
+
+<p class="subtitle">En el editor vas a poder elegir la posición y la alineación del texto por separado.<br>¿Este nivel de control te parece suficiente o querés algo más?</p>

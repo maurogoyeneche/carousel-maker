@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(awk NR>=20 && NR<=350 && length\\($0\\) < 500 *)",
+      "Bash(awk NR>=7 && NR<=350 && length\\($0\\) < 500 *)",
+      "Bash(python3 *)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(python3 -c ' *)",
+      "Read(//tmp/**)"
+    ]
+  }
+}

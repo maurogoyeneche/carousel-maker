@@ -1,0 +1,80 @@
+<h2>Formatos de carrusel — Instagram 4:5</h2>
+<p class="subtitle">Seleccioná uno o más que te interesen explorar</p>
+
+<div style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center;">
+
+  <!-- ACTUAL: Split B&W + Color -->
+  <div class="card" data-choice="split" onclick="toggleSelect(this)" style="width:180px;">
+    <div class="card-image" style="padding:12px;background:#0a0a0a;">
+      <div style="aspect-ratio:4/5;background:#1a1a1a;border-radius:6px;overflow:hidden;display:flex;flex-direction:column;">
+        <div style="flex:1;background:linear-gradient(135deg,#2a2a2a,#3a3a3a);display:flex;align-items:center;justify-content:center;position:relative;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.45)"></div>
+          <span style="color:rgba(255,255,255,0.65);font-size:8px;letter-spacing:1px;font-style:italic;z-index:1;text-align:center;padding:0 12px;line-height:1.4">solo tengo una tijera</span>
+        </div>
+        <div style="flex:1;background:linear-gradient(135deg,#6a4020,#8a5530);display:flex;align-items:center;justify-content:center;position:relative;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.35)"></div>
+          <span style="color:#fff;font-size:8px;font-weight:700;letter-spacing:1px;z-index:1;text-align:center;padding:0 12px;line-height:1.4">TENGO UNA HERRAMIENTA PARA CAMBIAR MI FUTURO</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Split B&W + Color <span style="color:#c8a96e;font-size:0.7em">ACTUAL</span></h3>
+      <p>Mitad B&N arriba, color abajo.</p>
+    </div>
+  </div>
+
+  <!-- Imagen completa + dos frases -->
+  <div class="card" data-choice="full" onclick="toggleSelect(this)" style="width:180px;">
+    <div class="card-image" style="padding:12px;background:#0a0a0a;">
+      <div style="aspect-ratio:4/5;background:linear-gradient(160deg,#4a2e10,#6a4020,#3a2010);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;padding:16px;position:relative;">
+        <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.1) 40%,rgba(0,0,0,0.1) 60%,rgba(0,0,0,0.65) 100%)"></div>
+        <span style="color:rgba(255,255,255,0.6);font-size:7px;letter-spacing:1px;font-style:italic;z-index:1;text-align:center;line-height:1.5">solo tengo una tijera</span>
+        <span style="color:#fff;font-size:8px;font-weight:700;letter-spacing:1px;z-index:1;text-align:center;line-height:1.4">TENGO UNA HERRAMIENTA PARA CAMBIAR MI FUTURO</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Imagen completa</h3>
+      <p>Foto entera, frases arriba y abajo superpuestas con gradiente.</p>
+    </div>
+  </div>
+
+  <!-- Cita / frase sola -->
+  <div class="card" data-choice="quote" onclick="toggleSelect(this)" style="width:180px;">
+    <div class="card-image" style="padding:12px;background:#0a0a0a;">
+      <div style="aspect-ratio:4/5;background:#0f0f0f;border:1px solid #1f1f1f;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;gap:10px;">
+        <div style="font-size:32px;color:#c8a96e;line-height:0.8;">"</div>
+        <span style="color:#fff;font-size:9px;font-weight:700;letter-spacing:1px;text-align:center;line-height:1.6;text-transform:uppercase;">El mejor corte que vas a tener</span>
+        <div style="width:24px;height:1px;background:#c8a96e;"></div>
+        <span style="color:#c8a96e;font-size:6px;letter-spacing:3px;text-transform:uppercase;">— Barbero</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Cita destacada</h3>
+      <p>Sin foto. Fondo oscuro, una frase poderosa con firma. Para reflexiones o valores.</p>
+    </div>
+  </div>
+
+  <!-- Antes / Después -->
+  <div class="card" data-choice="before_after" onclick="toggleSelect(this)" style="width:180px;">
+    <div class="card-image" style="padding:12px;background:#0a0a0a;">
+      <div style="aspect-ratio:4/5;background:#1a1a1a;border-radius:6px;overflow:hidden;display:flex;flex-direction:row;">
+        <div style="flex:1;background:linear-gradient(160deg,#2a2a2a,#3a3a3a);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:8px;position:relative;filter:grayscale(1);">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.4)"></div>
+          <span style="color:rgba(255,255,255,0.7);font-size:7px;letter-spacing:2px;z-index:1;text-transform:uppercase;">ANTES</span>
+        </div>
+        <div style="width:2px;background:#c8a96e;opacity:0.6;"></div>
+        <div style="flex:1;background:linear-gradient(160deg,#5a3010,#7a4a20);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:8px;position:relative;">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.3)"></div>
+          <span style="color:#fff;font-size:7px;font-weight:700;letter-spacing:2px;z-index:1;text-transform:uppercase;">DESPUÉS</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Antes / Después</h3>
+      <p>Dos fotos en el mismo slide. Muy efectivo para mostrar resultados de cortes.</p>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:20px">Cliqueá los que te interesen y avisame en el terminal.</p>
