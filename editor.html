@@ -58,7 +58,7 @@ body::before {
   inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
   pointer-events: none;
-  z-index: 9999;
+  z-index: 0;
   opacity: 0.35;
 }
 
@@ -488,7 +488,7 @@ textarea::placeholder { color: #333; }
   .tabs           { padding: 0 20px; }
   .logo           { font-size: 1.8rem; }
   .canvas-wrap,
-  .preview-wrap   { width: 100%; }
+  .preview-wrap   { width: 100%; position: static; }
   #previewCanvas  { width: 100% !important; height: auto !important; }
 }
 
@@ -739,6 +739,14 @@ btnDownload.addEventListener('click', function() {
   const arr = new Uint8Array(bytes.length);
   for (let i = 0; i < bytes.length; i++) arr[i] = bytes.charCodeAt(i);
   const blob = new Blob([arr], { type: 'image/jpeg' });
+  const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+  if (isMobile && navigator.canShare) {
+    const file = new File([blob], 'carrusel_slide.jpg', { type: 'image/jpeg' });
+    if (navigator.canShare({ files: [file] })) {
+      navigator.share({ files: [file], title: 'Carousel Maker' }).catch(function() {});
+      return;
+    }
+  }
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url; a.download = 'carrusel_slide.jpg';
