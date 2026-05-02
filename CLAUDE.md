@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this project is
 
-A static HTML/CSS/JS tool for generating Instagram carousel images (1080×1350 px) for a barbershop. Each carousel is a set of slides where each slide has two phrases rendered over a photo: one in the top half (grayscale, italic, low-contrast tone) and one in the bottom half (full-color, bold, positive tone).
+A static HTML/CSS/JS tool for generating Instagram carousel images (1080×1350 px). Each carousel is a set of slides where each slide has two phrases rendered over a photo: one in the top half (grayscale, italic, low-contrast tone) and one in the bottom half (full-color, bold, positive tone).
 
 No build system, no package manager, no dependencies. Open any HTML file directly in a browser.
 

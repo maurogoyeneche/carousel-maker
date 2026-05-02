@@ -27,7 +27,8 @@
       "Bash(cp /Users/maurogoyeneche/Downloads/Shadows_Into_Light,Sofia_Sans_Condensed,Tangerine,Tourney/Tangerine/Tangerine-Bold.ttf /Users/maurogoyeneche/workspace/cowork-ai/carruseles-barbero/fonts/Tangerine-700.ttf)",
       "Bash(cp /Users/maurogoyeneche/Downloads/Shadows_Into_Light,Sofia_Sans_Condensed,Tangerine,Tourney/Tangerine/Tangerine-Regular.ttf /Users/maurogoyeneche/workspace/cowork-ai/carruseles-barbero/fonts/Tangerine-400.ttf)",
       "Bash(cp /Users/maurogoyeneche/Downloads/Shadows_Into_Light,Sofia_Sans_Condensed,Tangerine,Tourney/Tourney/static/Tourney-Bold.ttf /Users/maurogoyeneche/workspace/cowork-ai/carruseles-barbero/fonts/Tourney-700.ttf)",
-      "Bash(cp /Users/maurogoyeneche/Downloads/Shadows_Into_Light,Sofia_Sans_Condensed,Tangerine,Tourney/Shadows_Into_Light/ShadowsIntoLight-Regular.ttf /Users/maurogoyeneche/workspace/cowork-ai/carruseles-barbero/fonts/ShadowsIntoLight-400.ttf)"
+      "Bash(cp /Users/maurogoyeneche/Downloads/Shadows_Into_Light,Sofia_Sans_Condensed,Tangerine,Tourney/Shadows_Into_Light/ShadowsIntoLight-Regular.ttf /Users/maurogoyeneche/workspace/cowork-ai/carruseles-barbero/fonts/ShadowsIntoLight-400.ttf)",
+      "Bash(npx vercel *)"
     ]
   }
 }
