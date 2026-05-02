@@ -1,23 +1,44 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="96" fill="#0a0a0a"/>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2a1f0e"/>
+      <stop offset="100%" stop-color="#0d0b08"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" fill="url(#bg)"/>
+
   <!-- back slide -->
-  <rect x="148" y="108" width="186" height="232" rx="14" fill="#1c1c1c"/>
+  <g transform="rotate(-8, 256, 256)">
+    <rect x="30" y="30" width="452" height="452" rx="24" fill="#1f1a12" opacity="0.85"/>
+  </g>
+
   <!-- mid slide -->
-  <rect x="163" y="126" width="186" height="232" rx="14" fill="#222"/>
+  <g transform="rotate(5, 256, 256)">
+    <rect x="30" y="30" width="452" height="452" rx="24" fill="#252015" opacity="0.9"/>
+  </g>
+
   <!-- front slide -->
-  <rect x="178" y="144" width="186" height="232" rx="14" fill="#2a2a2a"/>
-  <!-- gold top bar -->
-  <rect x="178" y="144" width="186" height="6" rx="3" fill="#c8a96e"/>
-  <!-- text lines -->
-  <rect x="198" y="176" width="146" height="8" rx="4" fill="#444"/>
-  <rect x="198" y="194" width="106" height="8" rx="4" fill="#444"/>
-  <!-- gold divider -->
-  <rect x="178" y="258" width="186" height="1" fill="#333"/>
-  <!-- color lines -->
-  <rect x="198" y="280" width="146" height="10" rx="5" fill="#c8a96e" opacity="0.9"/>
-  <rect x="198" y="300" width="106" height="10" rx="5" fill="#c8a96e" opacity="0.6"/>
-  <!-- dots nav -->
-  <circle cx="237" cy="402" r="7" fill="#c8a96e"/>
-  <circle cx="256" cy="402" r="5" fill="#444"/>
-  <circle cx="273" cy="402" r="5" fill="#444"/>
+  <rect x="36" y="36" width="440" height="440" rx="24" fill="#1c1810"/>
+
+  <!-- gold top accent bar -->
+  <rect x="36" y="36" width="440" height="14" rx="12" fill="#c8a96e"/>
+
+  <!-- top half: grayscale lines -->
+  <rect x="68" y="90" width="376" height="18" rx="9" fill="#3a3530"/>
+  <rect x="68" y="122" width="290" height="18" rx="9" fill="#2e2a25"/>
+  <rect x="68" y="154" width="336" height="18" rx="9" fill="#3a3530"/>
+
+  <!-- divider -->
+  <rect x="36" y="256" width="440" height="2" fill="#2e2820"/>
+
+  <!-- bottom half: gold lines -->
+  <rect x="68" y="290" width="376" height="20" rx="10" fill="#c8a96e"/>
+  <rect x="68" y="326" width="290" height="20" rx="10" fill="#c8a96e" opacity="0.7"/>
+  <rect x="68" y="362" width="336" height="20" rx="10" fill="#c8a96e" opacity="0.45"/>
+
+  <!-- nav dots -->
+  <circle cx="236" cy="448" r="12" fill="#c8a96e"/>
+  <circle cx="268" cy="448" r="8" fill="#3a3025"/>
+  <circle cx="294" cy="448" r="8" fill="#3a3025"/>
 </svg>
