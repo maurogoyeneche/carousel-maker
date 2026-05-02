@@ -28,24 +28,31 @@ body::before {
 .back-link {
   display:inline-flex; align-items:center; gap:8px;
   font-size:0.55rem; letter-spacing:3px; text-transform:uppercase;
-  color:var(--muted); text-decoration:none; padding:24px 40px 0;
+  color:var(--muted); text-decoration:none; padding:16px 16px 0;
   transition:color 0.2s;
 }
 .back-link:hover { color:var(--accent); }
-.layout {
-  display:flex; align-items:flex-start; gap:60px;
-  padding:32px 40px 60px; max-width:1100px; margin:0 auto;
-}
+/* LAYOUT: mobile-first columna */
+.layout { display:flex; flex-direction:column; padding:20px 16px 60px; gap:24px; }
 /* CANVAS */
-.canvas-wrap { flex:0 0 auto; }
+.canvas-wrap { width:100%; }
 .preview-label {
   font-size:0.6rem; letter-spacing:4px; text-transform:uppercase;
-  color:var(--muted); margin-bottom:16px; font-weight:300;
+  color:var(--muted); margin-bottom:12px; font-weight:300;
 }
+.canvas-inner { position:relative; display:block; width:100%; }
 #previewCanvas {
-  display:block; border-radius:8px;
-  box-shadow:0 40px 80px rgba(0,0,0,0.8);
-  outline:none;
+  display:block; border-radius:8px; width:100%; height:auto;
+  box-shadow:0 20px 60px rgba(0,0,0,0.8); outline:none;
+}
+/* Desktop: lado a lado */
+@media(min-width:860px) {
+  .back-link { padding:24px 40px 0; }
+  .layout { flex-direction:row; align-items:flex-start; gap:60px; padding:32px 40px 60px; max-width:1100px; margin:0 auto; }
+  .canvas-wrap { flex:0 0 405px; width:405px; position:sticky; top:32px; align-self:flex-start; }
+  .canvas-inner { display:inline-block; width:auto; }
+  #previewCanvas { width:405px; height:506px; }
+  .btn-download { min-width:405px; }
 }
 .empty-state {
   position:absolute; inset:0; display:flex; flex-direction:column;
@@ -73,7 +80,7 @@ body::before {
 .toggle-btn.active { background:var(--accent); color:var(--black); border-color:var(--accent); }
 /* Upload */
 .upload-zone {
-  border:1px dashed #333; border-radius:8px; padding:28px 20px;
+  display:block; position:relative; border:1px dashed #333; border-radius:8px; padding:28px 20px;
   text-align:center; cursor:pointer; transition:border-color 0.2s, background 0.2s;
 }
 .upload-zone:hover, .upload-zone.drag-over { border-color:var(--accent); background:#0f0f0f; }
@@ -164,22 +171,7 @@ input[type=text]::placeholder { color:#333; }
 }
 .btn-download:hover { background:#dfc080; }
 .btn-download:disabled { background:#2a2a2a; color:#555; cursor:not-allowed; }
-@media(max-width:800px) {
-  .layout { flex-direction:column; padding:24px 20px 48px; gap:36px; }
-  .canvas-wrap { width:100%; }
-  #previewCanvas { width:100% !important; height:auto !important; }
-  .back-link { padding:20px 20px 0; }
-}
-/* Fuentes adicionales */
-@font-face { font-family:'Bebas Neue';       font-weight:400; font-style:normal; src:url('fonts/BebasNeue-400.woff2') format('woff2'); }
-@font-face { font-family:'Cal Sans';         font-weight:400; font-style:normal; src:url('fonts/CalSans-Regular.ttf') format('truetype'); }
-@font-face { font-family:'Anton';            font-weight:400; font-style:normal; src:url('fonts/Anton-400.woff2') format('woff2'); }
-@font-face { font-family:'Playfair Display'; font-weight:700; font-style:normal; src:url('fonts/PlayfairDisplay-700.woff2') format('woff2'); }
-@font-face { font-family:'Playfair Display'; font-weight:400; font-style:normal; src:url('fonts/PlayfairDisplay-400.woff2') format('woff2'); }
-@font-face { font-family:'Abril Fatface';    font-weight:400; font-style:normal; src:url('fonts/AbrilFatface-400.woff2') format('woff2'); }
-@font-face { font-family:'Dancing Script';   font-weight:700; font-style:normal; src:url('fonts/DancingScript-700.woff2') format('woff2'); }
-@font-face { font-family:'Dancing Script';   font-weight:400; font-style:normal; src:url('fonts/DancingScript-400.woff2') format('woff2'); }
-@font-face { font-family:'Sacramento';       font-weight:400; font-style:normal; src:url('fonts/Sacramento-400.woff2') format('woff2'); }
+/* Fuentes cargadas via FontFace API en JS */
 /* Selectores de fuente y tamaño */
 .font-select {
   width:100%; background:#111; border:1px solid #1f1f1f; border-radius:8px;
@@ -218,7 +210,7 @@ input[type=text]::placeholder { color:#333; }
 
   <div class="canvas-wrap">
     <div class="preview-label">Vista previa</div>
-    <div style="position:relative;display:inline-block">
+    <div class="canvas-inner">
       <canvas id="previewCanvas" width="405" height="506"></canvas>
       <div class="empty-state" id="emptyState">
         <div class="empty-icon">✏️</div>
@@ -241,11 +233,11 @@ input[type=text]::placeholder { color:#333; }
 
     <!-- UPLOAD (visible cuando bgType=image) -->
     <div id="uploadSection">
-      <div class="upload-zone" id="uploadZone">
+      <label class="upload-zone" id="uploadZone">
         <div class="upload-icon">📷</div>
         <div class="upload-hint" id="uploadHint"><b>Hacé click o arrastrá tu foto</b><br>JPG, PNG — cualquier resolución</div>
-        <input type="file" id="fileInput" accept="image/*" style="display:none">
-      </div>
+        <input type="file" id="fileInput" accept="image/*" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;">
+      </label>
     </div>
 
     <!-- COLOR PICKER (visible cuando bgType=color) -->
@@ -272,9 +264,11 @@ input[type=text]::placeholder { color:#333; }
         <option value="Impact">Impact</option>
         <option value="Bebas Neue">Bebas Neue</option>
         <option value="Anton">Anton</option>
+        <option value="Tourney">Tourney</option>
         <option value="Abril Fatface">Abril Fatface</option>
-        <option value="Playfair Display">Playfair Display</option>
         <option value="Dancing Script">Dancing Script</option>
+        <option value="Tangerine">Tangerine</option>
+        <option value="Shadows Into Light">Shadows Into Light</option>
         <option value="Cal Sans">Cal Sans</option>
       </select>
     </div>
@@ -312,12 +306,24 @@ input[type=text]::placeholder { color:#333; }
       <div class="field-label">Subtítulo</div>
       <textarea id="subtitleInput" placeholder="Subtítulo opcional…" maxlength="100" style="min-height:60px"></textarea>
       <select class="font-select" id="fontSubSelect" onchange="setFontSub(this.value)" style="margin-top:8px">
-        <option value="Sacramento">Sacramento</option>
-        <option value="Dancing Script">Dancing Script</option>
-        <option value="Playfair Display">Playfair Display</option>
-        <option value="Cal Sans">Cal Sans</option>
         <option value="Josefin Sans">Josefin Sans</option>
+        <option value="Impact">Impact</option>
+        <option value="Bebas Neue">Bebas Neue</option>
+        <option value="Anton">Anton</option>
+        <option value="Tourney">Tourney</option>
+        <option value="Abril Fatface">Abril Fatface</option>
+        <option value="Dancing Script">Dancing Script</option>
+        <option value="Tangerine">Tangerine</option>
+        <option value="Shadows Into Light">Shadows Into Light</option>
+        <option value="Cal Sans">Cal Sans</option>
       </select>
+      <div class="size-row" style="margin-top:8px">
+        <button class="size-btn"        data-subscale="0.4"  onclick="setSubSize(this)">XS</button>
+        <button class="size-btn"        data-subscale="0.52" onclick="setSubSize(this)">S</button>
+        <button class="size-btn active" data-subscale="0.65" onclick="setSubSize(this)">M</button>
+        <button class="size-btn"        data-subscale="0.8"  onclick="setSubSize(this)">L</button>
+        <button class="size-btn"        data-subscale="1.0"  onclick="setSubSize(this)">XL</button>
+      </div>
     </div>
 
     <!-- SEPARADOR -->
@@ -327,6 +333,11 @@ input[type=text]::placeholder { color:#333; }
         <button class="align-btn active" data-sep="none"  onclick="setSep(this)">Sin sep.</button>
         <button class="align-btn"        data-sep="line"  onclick="setSep(this)">── Línea</button>
         <button class="align-btn"        data-sep="dots"  onclick="setSep(this)">· · · Puntos</button>
+      </div>
+      <div class="sep-row" id="sepColorRow" style="margin-top:8px; display:none">
+        <button class="align-btn active" data-scolor="accent" onclick="setSepColor(this)">Acento</button>
+        <button class="align-btn"        data-scolor="white"  onclick="setSepColor(this)">Blanco</button>
+        <button class="align-btn"        data-scolor="black"  onclick="setSepColor(this)">Negro</button>
       </div>
     </div>
 
@@ -399,11 +410,13 @@ const state = {
   vigType: 'none',
   vigIntensity: 0.7,
   fontMain: 'Josefin Sans',
-  fontSub: 'Poppins',
+  fontSub: 'Josefin Sans',
   fontSizeScale: 1.0,
   textColor: '#ffffff',
   accentColor: '#c8a96e',
   separator: 'none',
+  sepColor: 'accent',
+  subSizeScale: 0.65,
 };
 
 const FONT_ITALIC = { 'Josefin Sans': true };  // only Josefin uses italic by default
@@ -545,22 +558,23 @@ function drawSlide(canvas, { showGuide = false } = {}) {
   else if (state.align === 'center') textX = Math.round((zStart + zEnd) / 2);
   else                               textX = zEnd;
 
-  ctx.font = `${mainWeight} ${fontStyle} ${fontSize}px '${state.fontMain}', sans-serif`;
+  ctx.font = `${fontStyle} ${mainWeight} ${fontSize}px '${state.fontMain}', sans-serif`;
   ctx.textAlign = state.align;
 
   const lines = wrapText(ctx, text, maxW);
-  const lineH = fontSize * 1.35;
+  const lineH = fontSize * 1.1;
 
   // Subtítulo
   const subtitleText = document.getElementById('subtitleInput').value.trim();
-  const subFontSize = Math.round(fontSize * 0.65);
+  const subFontSize = Math.round(getFontSize(subtitleText || 'TEXTO', state.subSizeScale) * (W / 405));
   let subLines = [];
   let subH = 0;
   if (subtitleText) {
-    ctx.font = `normal 400 ${subFontSize}px '${state.fontSub}', sans-serif`;
+    ctx.font = `normal ${fontWeight(state.fontSub)} ${subFontSize}px '${state.fontSub}', sans-serif`;
     subLines = wrapText(ctx, subtitleText, maxW);
-    subH = subLines.length * subFontSize * 1.4 + fontSize * 0.15;
-    ctx.font = `${mainWeight} ${fontStyle} ${fontSize}px '${state.fontMain}', sans-serif`;
+    const sepH = state.separator !== 'none' ? fontSize * 0.5 : 0;
+    subH = subLines.length * subFontSize * 1.2 + fontSize * 0.15 + sepH;
+    ctx.font = `${fontStyle} ${mainWeight} ${fontSize}px '${state.fontMain}', sans-serif`;
   }
 
   // Firma
@@ -572,8 +586,8 @@ function drawSlide(canvas, { showGuide = false } = {}) {
   if (firmaEnabled && firmaText) {
     ctx.font = `300 italic ${firmaFontSize}px 'Josefin Sans', sans-serif`;
     firmaLines = wrapText(ctx, firmaText, maxW);
-    firmaH = firmaLines.length * firmaFontSize * 1.4 + fontSize * 0.4;
-    ctx.font = `${mainWeight} ${fontStyle} ${fontSize}px '${state.fontMain}', sans-serif`;
+    firmaH = firmaLines.length * firmaFontSize * 1.2 + fontSize * 0.4;
+    ctx.font = `${fontStyle} ${mainWeight} ${fontSize}px '${state.fontMain}', sans-serif`;
   }
 
   const totalH = lines.length * lineH + subH + firmaH;
@@ -581,9 +595,9 @@ function drawSlide(canvas, { showGuide = false } = {}) {
   // Posición Y
   const vPad = Math.round(H * 0.12);
   let startY;
-  if (state.posV === 'top')    startY = vPad;
+  if (state.posV === 'top')         startY = vPad;
   else if (state.posV === 'middle') startY = (H - totalH) / 2;
-  else                          startY = H - totalH - vPad;
+  else                              startY = H - totalH - vPad;
 
   const tColor = state.textColor || '#ffffff';
   const aColor = state.accentColor || '#c8a96e';
@@ -594,45 +608,49 @@ function drawSlide(canvas, { showGuide = false } = {}) {
   ctx.shadowOffsetX = 1; ctx.shadowOffsetY = 1;
 
   // Texto principal
-  ctx.font = `${mainWeight} ${fontStyle} ${fontSize}px '${state.fontMain}', sans-serif`;
+  ctx.font = `${fontStyle} ${mainWeight} ${fontSize}px '${state.fontMain}', sans-serif`;
   ctx.textAlign = state.align;
   lines.forEach((line, i) => {
     fillColoredLine(ctx, line, textX, startY + i * lineH, tColor, aColor);
   });
 
-  // Separador
-  if (subLines.length > 0 && state.separator !== 'none') {
-    const sepY = startY + lines.length * lineH + fontSize * 0.15 + subFontSize * 0.3;
-    const sepW = Math.round(maxW * 0.35);
-    const sepX = state.align === 'center' ? textX - sepW / 2
-               : state.align === 'right'  ? textX - sepW
-               : textX;
-    ctx.save();
-    ctx.shadowColor = 'transparent';
-    ctx.strokeStyle = aColor;
-    ctx.lineWidth = W > 500 ? 2 : 1;
-    if (state.separator === 'line') {
-      ctx.beginPath(); ctx.moveTo(sepX, sepY); ctx.lineTo(sepX + sepW, sepY); ctx.stroke();
-    } else {
-      const dotR = W > 500 ? 3 : 1.5;
-      const gap = W > 500 ? 16 : 8;
-      [-1, 0, 1].forEach(d => {
-        ctx.beginPath();
-        ctx.arc(sepX + sepW / 2 + d * gap, sepY, dotR, 0, Math.PI * 2);
-        ctx.fillStyle = aColor;
-        ctx.fill();
-      });
-    }
-    ctx.restore();
-  }
-
-  // Subtítulo
+  // Separador + subtítulo
   if (subLines.length > 0) {
+    const gapAbove = fontSize * 0.15;
     const sepH = state.separator !== 'none' ? fontSize * 0.5 : 0;
-    const sy2 = startY + lines.length * lineH + fontSize * 0.15 + sepH;
-    ctx.font = `normal 400 ${subFontSize}px '${state.fontSub}', sans-serif`;
+    const sy2 = startY + lines.length * lineH + gapAbove + sepH;
+
+    if (state.separator !== 'none') {
+      const sepY = startY + lines.length * lineH + (gapAbove + sepH) / 2;
+      const sepW = Math.round(maxW * 0.35);
+      const sepX = state.align === 'center' ? textX - sepW / 2
+                 : state.align === 'right'  ? textX - sepW
+                 : textX;
+      const sepStroke = state.sepColor === 'white' ? '#ffffff'
+                      : state.sepColor === 'black' ? '#000000'
+                      : aColor;
+      ctx.save();
+      ctx.shadowColor = 'transparent';
+      ctx.lineWidth = W > 500 ? 2 : 1;
+      if (state.separator === 'line') {
+        ctx.strokeStyle = sepStroke;
+        ctx.beginPath(); ctx.moveTo(sepX, sepY); ctx.lineTo(sepX + sepW, sepY); ctx.stroke();
+      } else {
+        const dotR = W > 500 ? 3 : 1.5;
+        const gap = W > 500 ? 16 : 8;
+        [-1, 0, 1].forEach(d => {
+          ctx.beginPath();
+          ctx.arc(sepX + sepW / 2 + d * gap, sepY, dotR, 0, Math.PI * 2);
+          ctx.fillStyle = sepStroke;
+          ctx.fill();
+        });
+      }
+      ctx.restore();
+    }
+
+    ctx.font = `normal ${fontWeight(state.fontSub)} ${subFontSize}px '${state.fontSub}', sans-serif`;
     subLines.forEach((line, i) => {
-      fillColoredLine(ctx, line, textX, sy2 + i * subFontSize * 1.4, tColor, aColor);
+      fillColoredLine(ctx, line, textX, sy2 + i * subFontSize * 1.2, tColor, aColor);
     });
   }
 
@@ -641,7 +659,7 @@ function drawSlide(canvas, { showGuide = false } = {}) {
     ctx.font = `300 italic ${firmaFontSize}px 'Josefin Sans', sans-serif`;
     const fy = startY + lines.length * lineH + subH + fontSize * 0.4;
     firmaLines.forEach((line, i) => {
-      fillColoredLine(ctx, line, textX, fy + i * firmaFontSize * 1.4, tColor, aColor);
+      fillColoredLine(ctx, line, textX, fy + i * firmaFontSize * 1.2, tColor, aColor);
     });
   }
 
@@ -704,23 +722,39 @@ function setSep(btn) {
   state.separator = btn.dataset.sep;
   document.querySelectorAll('[data-sep]').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+  document.getElementById('sepColorRow').style.display = state.separator !== 'none' ? 'flex' : 'none';
+  render();
+}
+
+function setSepColor(btn) {
+  state.sepColor = btn.dataset.scolor;
+  document.querySelectorAll('[data-scolor]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+function setSubSize(btn) {
+  state.subSizeScale = parseFloat(btn.dataset.subscale);
+  document.querySelectorAll('[data-subscale]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
   render();
 }
 
 const FONT_WEIGHT = {
   'Bebas Neue': 400, 'Anton': 400, 'Abril Fatface': 400,
-  'Sacramento': 400, 'Dancing Script': 700,
+  'Dancing Script': 700, 'Tangerine': 700, 'Shadows Into Light': 400,
 };
 function fontWeight(family) { return FONT_WEIGHT[family] || 700; }
 
 function setFontMain(val) {
   state.fontMain = val;
-  document.fonts.load(`${fontWeight(val)} 24px '${val}'`).then(render);
+  const style = FONT_ITALIC[val] ? 'italic' : 'normal';
+  document.fonts.load(`${style} ${fontWeight(val)} 24px '${val}'`).then(render);
 }
 
 function setFontSub(val) {
   state.fontSub = val;
-  document.fonts.load(`400 24px '${val}'`).then(render);
+  document.fonts.load(`normal 400 24px '${val}'`).then(render);
 }
 
 function setFontSize(btn) {
@@ -764,8 +798,6 @@ function loadFile(file) {
   reader.readAsDataURL(file);
 }
 
-document.getElementById('uploadZone').addEventListener('click', () =>
-  document.getElementById('fileInput').click());
 document.getElementById('fileInput').addEventListener('change', e =>
   loadFile(e.target.files[0]));
 document.getElementById('uploadZone').addEventListener('dragover', e => {
@@ -815,15 +847,22 @@ document.getElementById('btnDownload').addEventListener('click', () => {
 
 // ── Init ─────────────────────────────────────────────────
 document.getElementById('vigSection').style.display = state.bgType === 'image' ? 'block' : 'none';
-// Precargar todas las fuentes para que el canvas las tenga disponibles
-const FONT_PRELOAD = [
-  "700 24px 'Josefin Sans'",    "400 24px 'Bebas Neue'",
-  "400 24px 'Anton'",           "400 24px 'Abril Fatface'",
-  "700 24px 'Playfair Display'","400 24px 'Playfair Display'",
-  "700 24px 'Dancing Script'",  "400 24px 'Dancing Script'",
-  "400 24px 'Sacramento'",      "400 24px 'Cal Sans'",
+// Carga de fuentes via FontFace API (más confiable para canvas que @font-face CSS)
+const FONT_FACES = [
+  new FontFace('Josefin Sans', "url('fonts/JosefinSans-VariableFont_wght.ttf')", {weight:'100 900', style:'normal'}),
+  new FontFace('Josefin Sans', "url('fonts/JosefinSans-Italic-VariableFont_wght.ttf')", {weight:'100 900', style:'italic'}),
+  new FontFace('Bebas Neue',   "url('fonts/BebasNeue-400.woff2')",      {weight:'400', style:'normal'}),
+  new FontFace('Cal Sans',     "url('fonts/CalSans-Regular.ttf')",      {weight:'400', style:'normal'}),
+  new FontFace('Anton',        "url('fonts/Anton-400.woff2')",          {weight:'400', style:'normal'}),
+  new FontFace('Abril Fatface',"url('fonts/AbrilFatface-400.woff2')",   {weight:'400', style:'normal'}),
+  new FontFace('Dancing Script',"url('fonts/DancingScript-700.woff2')", {weight:'700', style:'normal'}),
+  new FontFace('Tourney',      "url('fonts/Tourney-700.ttf')",          {weight:'700', style:'normal'}),
+  new FontFace('Tangerine',    "url('fonts/Tangerine-700.ttf')",        {weight:'700', style:'normal'}),
+  new FontFace('Tangerine',    "url('fonts/Tangerine-400.ttf')",        {weight:'400', style:'normal'}),
+  new FontFace('Shadows Into Light', "url('fonts/ShadowsIntoLight-400.ttf')", {weight:'400', style:'normal'}),
 ];
-Promise.all(FONT_PRELOAD.map(f => document.fonts.load(f))).then(render);
+Promise.all(FONT_FACES.map(f => f.load().then(loaded => { document.fonts.add(loaded); return loaded; }))).then(render);
 </script>
+<footer style="text-align:center;padding:24px 0 32px;font-size:0.5rem;letter-spacing:3px;text-transform:uppercase;color:#333;font-family:'Josefin Sans',sans-serif;">powered by <span style="color:#c8a96e">magodev</span></footer>
 </body>
 </html>

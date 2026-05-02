@@ -8,7 +8,26 @@
       "Bash(git add *)",
       "Bash(git commit *)",
       "Bash(python3 -c ' *)",
-      "Read(//tmp/**)"
+      "Read(//tmp/**)",
+      "mcp__plugin_playwright_playwright__browser_navigate",
+      "Bash(python3 -m http.server 8765)",
+      "Bash(echo \"PID: $!\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8766/editor2.html)",
+      "mcp__plugin_playwright_playwright__browser_take_screenshot",
+      "mcp__plugin_playwright_playwright__browser_click",
+      "mcp__plugin_playwright_playwright__browser_type",
+      "mcp__plugin_playwright_playwright__browser_evaluate",
+      "Bash(curl -s \"https://fonts.googleapis.com/css2?family=Cal+Sans:wght@600&display=swap\" -A \"Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36\")",
+      "mcp__plugin_playwright_playwright__browser_press_key",
+      "mcp__plugin_playwright_playwright__browser_close",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8766/fonts/Poppins-400.woff2)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8766/fonts/Montserrat-400.woff2)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8766/fonts/CalSans-Regular.ttf)",
+      "Bash(grep -n \"\\\\`700\\\\|\\\\${fontStyle}\" /Users/maurogoyeneche/workspace/cowork-ai/carruseles-barbero/editor2.html)",
+      "Bash(cp /Users/maurogoyeneche/Downloads/Shadows_Into_Light,Sofia_Sans_Condensed,Tangerine,Tourney/Tangerine/Tangerine-Bold.ttf /Users/maurogoyeneche/workspace/cowork-ai/carruseles-barbero/fonts/Tangerine-700.ttf)",
+      "Bash(cp /Users/maurogoyeneche/Downloads/Shadows_Into_Light,Sofia_Sans_Condensed,Tangerine,Tourney/Tangerine/Tangerine-Regular.ttf /Users/maurogoyeneche/workspace/cowork-ai/carruseles-barbero/fonts/Tangerine-400.ttf)",
+      "Bash(cp /Users/maurogoyeneche/Downloads/Shadows_Into_Light,Sofia_Sans_Condensed,Tangerine,Tourney/Tourney/static/Tourney-Bold.ttf /Users/maurogoyeneche/workspace/cowork-ai/carruseles-barbero/fonts/Tourney-700.ttf)",
+      "Bash(cp /Users/maurogoyeneche/Downloads/Shadows_Into_Light,Sofia_Sans_Condensed,Tangerine,Tourney/Shadows_Into_Light/ShadowsIntoLight-Regular.ttf /Users/maurogoyeneche/workspace/cowork-ai/carruseles-barbero/fonts/ShadowsIntoLight-400.ttf)"
     ]
   }
 }

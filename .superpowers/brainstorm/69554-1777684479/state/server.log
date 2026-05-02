@@ -20,3 +20,4 @@
 {"source":"user-event","type":"click","text":"Una tijeraen mis manos\n    \n    ← Centro izq","choice":"middle-left","id":null,"timestamp":1777685007075}
 {"source":"user-event","type":"click","text":"Una tijeraen mis manos\n    \n    ← Centro izq","choice":"middle-left","id":null,"timestamp":1777685009682}
 {"type":"screen-added","file":"/Users/maurogoyeneche/workspace/cowork-ai/carruseles-barbero/.superpowers/brainstorm/69554-1777684479/content/waiting.html"}
+{"type":"server-stopped","reason":"idle timeout"}
