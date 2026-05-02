@@ -129,6 +129,21 @@ textarea::placeholder { color:#333; }
 }
 .align-btn:hover { border-color:#444; color:var(--white); }
 .align-btn.active { border-color:var(--accent); color:var(--accent); background:#1a1500; }
+/* Vinietado */
+.vig-row { display:flex; gap:6px; flex-wrap:wrap; }
+.vig-btn {
+  padding:8px 10px; font-family:'Josefin Sans',sans-serif;
+  font-size:0.9rem; background:#111; border:1px solid #1f1f1f;
+  color:var(--muted); cursor:pointer; border-radius:4px;
+  transition:all 0.15s; min-width:38px; text-align:center;
+}
+.vig-btn:hover { border-color:#444; color:var(--white); }
+.vig-btn.active { border-color:var(--accent); color:var(--accent); background:#1a1500; }
+.vig-intensity { display:flex; align-items:center; gap:10px; margin-top:10px; }
+.vig-intensity input[type=range] {
+  flex:1; accent-color:var(--accent); cursor:pointer; height:4px;
+}
+.vig-intensity span { font-size:0.65rem; letter-spacing:2px; color:var(--muted); min-width:32px; text-align:right; }
 /* Firma */
 .firma-row { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
 .firma-check { width:16px; height:16px; accent-color:var(--accent); cursor:pointer; }
@@ -237,6 +252,25 @@ input[type=text]::placeholder { color:#333; }
       </div>
     </div>
 
+    <!-- VINIETADO (solo cuando hay foto) -->
+    <div id="vigSection" style="display:none">
+      <div class="section-label">Vinietado</div>
+      <div class="vig-row">
+        <button class="vig-btn active" data-vig="none"    onclick="setVig('none')">✕</button>
+        <button class="vig-btn"        data-vig="circular" onclick="setVig('circular')">◎</button>
+        <button class="vig-btn"        data-vig="top"      onclick="setVig('top')">↑</button>
+        <button class="vig-btn"        data-vig="bottom"   onclick="setVig('bottom')">↓</button>
+        <button class="vig-btn"        data-vig="left"     onclick="setVig('left')">←</button>
+        <button class="vig-btn"        data-vig="right"    onclick="setVig('right')">→</button>
+        <button class="vig-btn"        data-vig="top-bottom"  onclick="setVig('top-bottom')">↕</button>
+        <button class="vig-btn"        data-vig="left-right"  onclick="setVig('left-right')">↔</button>
+      </div>
+      <div class="vig-intensity" id="vigIntensityRow" style="display:none">
+        <input type="range" min="10" max="100" value="70" id="vigSlider" oninput="setVigIntensity(this.value)">
+        <span id="vigLabel">70%</span>
+      </div>
+    </div>
+
     <!-- FIRMA -->
     <div>
       <div class="firma-row">
@@ -258,6 +292,8 @@ const state = {
   posV: 'middle',
   posH: 'center',
   align: 'center',
+  vigType: 'none',
+  vigIntensity: 0.7,
 };
 
 // ── Canvas utils ─────────────────────────────────────────
@@ -286,6 +322,43 @@ function wrapText(ctx, text, maxW) {
   return lines;
 }
 
+function drawVignette(ctx, W, H, type, intensity) {
+  if (type === 'none') return;
+  const a = intensity;
+  const f = 0.55; // fade extent (proportion of dimension)
+  let g;
+  if (type === 'circular') {
+    const cx = W / 2, cy = H / 2, r = Math.sqrt(cx*cx + cy*cy);
+    g = ctx.createRadialGradient(cx, cy, r * 0.25, cx, cy, r);
+    g.addColorStop(0, 'rgba(0,0,0,0)');
+    g.addColorStop(1, `rgba(0,0,0,${a})`);
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  } else if (type === 'top' || type === 'top-bottom') {
+    g = ctx.createLinearGradient(0, 0, 0, H * f);
+    g.addColorStop(0, `rgba(0,0,0,${a})`);
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  }
+  if (type === 'bottom' || type === 'top-bottom') {
+    g = ctx.createLinearGradient(0, H, 0, H * (1 - f));
+    g.addColorStop(0, `rgba(0,0,0,${a})`);
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  }
+  if (type === 'left' || type === 'left-right') {
+    g = ctx.createLinearGradient(0, 0, W * f, 0);
+    g.addColorStop(0, `rgba(0,0,0,${a})`);
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  }
+  if (type === 'right' || type === 'left-right') {
+    g = ctx.createLinearGradient(W, 0, W * (1 - f), 0);
+    g.addColorStop(0, `rgba(0,0,0,${a})`);
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  }
+}
+
 function drawSlide(canvas, { showGuide = false } = {}) {
   const ctx = canvas.getContext('2d');
   const W = canvas.width, H = canvas.height;
@@ -302,12 +375,7 @@ function drawSlide(canvas, { showGuide = false } = {}) {
     const sx = (img.naturalWidth - sw) / 2;
     const sy = (img.naturalHeight - sh) / 2;
     ctx.drawImage(img, sx, sy, sw, sh, 0, 0, W, H);
-    const grad = ctx.createLinearGradient(0, 0, 0, H);
-    grad.addColorStop(0,   'rgba(0,0,0,0.45)');
-    grad.addColorStop(0.5, 'rgba(0,0,0,0.15)');
-    grad.addColorStop(1,   'rgba(0,0,0,0.45)');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, W, H);
+    drawVignette(ctx, W, H, state.vigType, state.vigIntensity);
   }
 
   const text = document.getElementById('textInput').value.trim();
@@ -415,8 +483,23 @@ function setBgType(type) {
   state.bgType = type;
   document.getElementById('uploadSection').style.display = type === 'image' ? 'block' : 'none';
   document.getElementById('colorSection').style.display  = type === 'color' ? 'block' : 'none';
+  document.getElementById('vigSection').style.display    = type === 'image' ? 'block' : 'none';
   document.getElementById('btnFoto').classList.toggle('active', type === 'image');
   document.getElementById('btnColor').classList.toggle('active', type === 'color');
+  render();
+}
+
+function setVig(type) {
+  state.vigType = type;
+  document.querySelectorAll('.vig-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.vig-btn[data-vig="${type}"]`).classList.add('active');
+  document.getElementById('vigIntensityRow').style.display = type === 'none' ? 'none' : 'flex';
+  render();
+}
+
+function setVigIntensity(val) {
+  state.vigIntensity = val / 100;
+  document.getElementById('vigLabel').textContent = val + '%';
   render();
 }
 
@@ -503,6 +586,7 @@ document.getElementById('btnDownload').addEventListener('click', () => {
 });
 
 // ── Init ─────────────────────────────────────────────────
+document.getElementById('vigSection').style.display = state.bgType === 'image' ? 'block' : 'none';
 render();
 </script>
 </body>
