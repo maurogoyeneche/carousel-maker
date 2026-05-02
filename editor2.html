@@ -43,13 +43,13 @@ body::before {
 /* CANVAS */
 .canvas-wrap { width:100%; }
 .preview-label {
-  font-size:0.6rem; letter-spacing:4px; text-transform:uppercase;
-  color:var(--muted); margin-bottom:12px; font-weight:300;
+  font-size:0.75rem; letter-spacing:4px; text-transform:uppercase;
+  color:#cbd5e1; margin-bottom:12px; font-weight:300;
 }
 .canvas-inner { position:relative; display:block; width:100%; }
 #previewCanvas {
   display:block; border-radius:8px; width:100%; height:auto;
-  box-shadow:0 20px 60px rgba(0,0,0,0.8); outline:none;
+  box-shadow:none; outline:none;
 }
 /* Desktop: lado a lado */
 @media(min-width:860px) {
@@ -70,8 +70,8 @@ body::before {
 /* PANEL */
 .panel { flex:1; display:flex; flex-direction:column; gap:28px; }
 .field-label {
-  font-size:0.6rem; letter-spacing:4px; text-transform:uppercase;
-  color:var(--muted); margin-bottom:10px; font-weight:300;
+  font-size:0.75rem; letter-spacing:4px; text-transform:uppercase;
+  color:#cbd5e1; margin-bottom:10px; font-weight:300;
 }
 /* Toggle */
 .toggle-row { display:flex; gap:0; }
@@ -92,7 +92,7 @@ body::before {
 .upload-zone:hover, .upload-zone.drag-over { border-color:var(--accent); background:#0f0f0f; }
 .upload-zone.loaded { border-style:solid; border-color:#2a2a2a; }
 .upload-icon { font-size:1.8rem; margin-bottom:8px; }
-.upload-hint { font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; color:var(--muted); line-height:1.8; }
+.upload-hint { font-size:0.75rem; letter-spacing:2px; text-transform:uppercase; color:var(--muted); line-height:1.8; }
 .upload-hint b { color:var(--white); font-weight:700; }
 /* Color picker */
 .color-row { display:flex; align-items:center; gap:14px; }
@@ -202,7 +202,7 @@ input[type=text]::placeholder { color:#333; }
 .color-chip { display:flex; align-items:center; gap:8px; cursor:pointer; }
 .color-chip input[type=color] { width:32px; height:32px; border:1px solid #1f1f1f; border-radius:6px; padding:2px; background:#111; cursor:pointer; }
 .color-chip label { font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--muted); cursor:pointer; }
-.color-hint { font-size:0.6rem; letter-spacing:1px; color:#555; margin-top:6px; }
+.color-hint { font-size:0.75rem; letter-spacing:1px; color:#aaa; margin-top:6px; }
 .color-hint code { color:var(--accent); background:#1a1500; padding:1px 4px; border-radius:3px; font-family:monospace; }
 /* Separador */
 .sep-row { display:flex; gap:6px; }
@@ -373,11 +373,21 @@ input[type=text]::placeholder { color:#333; }
       </div>
     </div>
 
-    <!-- VINIETADO (solo cuando hay foto) -->
+    <!-- OVERLAY (solo cuando hay foto) -->
+    <div id="overlaySection" style="display:none">
+      <div class="field-label">Overlay</div>
+      <div class="vig-intensity" style="display:flex">
+        <input type="range" min="0" max="90" value="0" id="overlaySlider" oninput="setOverlay(this.value)">
+        <span id="overlayLabel">0%</span>
+      </div>
+    </div>
+
+        <!-- VINIETADO (solo cuando hay foto) -->
     <div id="vigSection" style="display:none">
       <div class="section-label">Vinietado</div>
       <div class="vig-row">
         <button class="vig-btn active" data-vig="none"    onclick="setVig('none')">✕</button>
+        <button class="vig-btn"        data-vig="full"     onclick="setVig('full')">■</button>
         <button class="vig-btn"        data-vig="circular" onclick="setVig('circular')">◎</button>
         <button class="vig-btn"        data-vig="top"      onclick="setVig('top')">↑</button>
         <button class="vig-btn"        data-vig="bottom"   onclick="setVig('bottom')">↓</button>
@@ -389,6 +399,14 @@ input[type=text]::placeholder { color:#333; }
       <div class="vig-intensity" id="vigIntensityRow" style="display:none">
         <input type="range" min="10" max="100" value="70" id="vigSlider" oninput="setVigIntensity(this.value)">
         <span id="vigLabel">70%</span>
+      </div>
+    </div>
+
+    <!-- SOMBRA TEXTO -->
+    <div>
+      <div class="firma-row">
+        <input type="checkbox" class="firma-check" id="shadowCheck" onchange="render()">
+        <label class="firma-label" for="shadowCheck">Sombra en texto</label>
       </div>
     </div>
 
@@ -413,6 +431,7 @@ const state = {
   posV: 'middle',
   posH: 'center',
   align: 'center',
+  overlayOpacity: 0,
   vigType: 'none',
   vigIntensity: 0.7,
   fontMain: 'Josefin Sans',
@@ -489,7 +508,10 @@ function drawVignette(ctx, W, H, type, intensity) {
   const a = intensity;
   const f = 0.55; // fade extent (proportion of dimension)
   let g;
-  if (type === 'circular') {
+  if (type === 'full') {
+    ctx.fillStyle = `rgba(0,0,0,${a})`;
+    ctx.fillRect(0, 0, W, H);
+  } else if (type === 'circular') {
     const cx = W / 2, cy = H / 2, r = Math.sqrt(cx*cx + cy*cy);
     g = ctx.createRadialGradient(cx, cy, r * 0.25, cx, cy, r);
     g.addColorStop(0, 'rgba(0,0,0,0)');
@@ -537,6 +559,10 @@ function drawSlide(canvas, { showGuide = false } = {}) {
     const sx = (img.naturalWidth - sw) / 2;
     const sy = (img.naturalHeight - sh) / 2;
     ctx.drawImage(img, sx, sy, sw, sh, 0, 0, W, H);
+    if (state.overlayOpacity > 0) {
+      ctx.fillStyle = `rgba(0,0,0,${state.overlayOpacity})`;
+      ctx.fillRect(0, 0, W, H);
+    }
     drawVignette(ctx, W, H, state.vigType, state.vigIntensity);
   }
 
@@ -609,9 +635,10 @@ function drawSlide(canvas, { showGuide = false } = {}) {
   const aColor = state.accentColor || '#c8a96e';
 
   // Sombra
-  ctx.shadowColor = 'rgba(0,0,0,0.9)';
-  ctx.shadowBlur = W > 500 ? 18 : 10;
-  ctx.shadowOffsetX = 1; ctx.shadowOffsetY = 1;
+  const useShadow = document.getElementById('shadowCheck').checked;
+  ctx.shadowColor = useShadow ? 'rgba(0,0,0,0.8)' : 'transparent';
+  ctx.shadowBlur = 0;
+  ctx.shadowOffsetX = useShadow ? 1 : 0; ctx.shadowOffsetY = useShadow ? 1 : 0;
 
   // Texto principal
   ctx.font = `${fontStyle} ${mainWeight} ${fontSize}px '${state.fontMain}', sans-serif`;
@@ -703,11 +730,18 @@ function setBgType(type) {
   document.getElementById('uploadSection').style.display = type === 'image' ? 'block' : 'none';
   document.getElementById('colorSection').style.display  = type === 'color' ? 'block' : 'none';
   document.getElementById('vigSection').style.display    = type === 'image' ? 'block' : 'none';
+  document.getElementById('overlaySection').style.display = type === 'image' ? 'block' : 'none';
   document.getElementById('btnFoto').classList.toggle('active', type === 'image');
   document.getElementById('btnColor').classList.toggle('active', type === 'color');
   render();
 }
 
+
+function setOverlay(val) {
+  state.overlayOpacity = val / 100;
+  document.getElementById('overlayLabel').textContent = val + '%';
+  render();
+}
 function setVig(type) {
   state.vigType = type;
   document.querySelectorAll('.vig-btn').forEach(b => b.classList.remove('active'));
@@ -853,6 +887,7 @@ document.getElementById('btnDownload').addEventListener('click', () => {
 
 // ── Init ─────────────────────────────────────────────────
 document.getElementById('vigSection').style.display = state.bgType === 'image' ? 'block' : 'none';
+  document.getElementById('overlaySection').style.display = state.bgType === 'image' ? 'block' : 'none';
 // Carga de fuentes via FontFace API (más confiable para canvas que @font-face CSS)
 const FONT_FACES = [
   new FontFace('Josefin Sans', "url('fonts/JosefinSans-VariableFont_wght.ttf')", {weight:'100 900', style:'normal'}),

@@ -28,7 +28,9 @@
       "Bash(cp /Users/maurogoyeneche/Downloads/Shadows_Into_Light,Sofia_Sans_Condensed,Tangerine,Tourney/Tangerine/Tangerine-Regular.ttf /Users/maurogoyeneche/workspace/cowork-ai/carruseles-barbero/fonts/Tangerine-400.ttf)",
       "Bash(cp /Users/maurogoyeneche/Downloads/Shadows_Into_Light,Sofia_Sans_Condensed,Tangerine,Tourney/Tourney/static/Tourney-Bold.ttf /Users/maurogoyeneche/workspace/cowork-ai/carruseles-barbero/fonts/Tourney-700.ttf)",
       "Bash(cp /Users/maurogoyeneche/Downloads/Shadows_Into_Light,Sofia_Sans_Condensed,Tangerine,Tourney/Shadows_Into_Light/ShadowsIntoLight-Regular.ttf /Users/maurogoyeneche/workspace/cowork-ai/carruseles-barbero/fonts/ShadowsIntoLight-400.ttf)",
-      "Bash(npx vercel *)"
+      "Bash(npx vercel *)",
+      "Bash(sed -n '159,163p' /Users/maurogoyeneche/workspace/cowork-ai/carousel-maker/editor.html)",
+      "Bash(sed -n '50,54p' /Users/maurogoyeneche/workspace/cowork-ai/carousel-maker/editor2.html)"
     ]
   }
 }
