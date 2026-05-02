@@ -170,6 +170,37 @@ input[type=text]::placeholder { color:#333; }
   #previewCanvas { width:100% !important; height:auto !important; }
   .back-link { padding:20px 20px 0; }
 }
+/* Fuentes adicionales */
+@font-face { font-family:'Poppins';        font-weight:700; font-style:normal; src:url('fonts/Poppins-700.woff2') format('woff2'); }
+@font-face { font-family:'Poppins';        font-weight:400; font-style:normal; src:url('fonts/Poppins-400.woff2') format('woff2'); }
+@font-face { font-family:'Montserrat';     font-weight:700; font-style:normal; src:url('fonts/Montserrat-700.woff2') format('woff2'); }
+@font-face { font-family:'Montserrat';     font-weight:400; font-style:normal; src:url('fonts/Montserrat-400.woff2') format('woff2'); }
+@font-face { font-family:'Oswald';         font-weight:700; font-style:normal; src:url('fonts/Oswald-700.woff2') format('woff2'); }
+@font-face { font-family:'Oswald';         font-weight:400; font-style:normal; src:url('fonts/Oswald-400.woff2') format('woff2'); }
+@font-face { font-family:'Raleway';        font-weight:700; font-style:normal; src:url('fonts/Raleway-700.woff2') format('woff2'); }
+@font-face { font-family:'Raleway';        font-weight:400; font-style:normal; src:url('fonts/Raleway-400.woff2') format('woff2'); }
+@font-face { font-family:'Bebas Neue';     font-weight:400; font-style:normal; src:url('fonts/BebasNeue-400.woff2') format('woff2'); }
+@font-face { font-family:'League Spartan'; font-weight:700; font-style:normal; src:url('fonts/LeagueSpartan-700.woff2') format('woff2'); }
+@font-face { font-family:'League Spartan'; font-weight:400; font-style:normal; src:url('fonts/LeagueSpartan-400.woff2') format('woff2'); }
+/* Selectores de fuente y tamaño */
+.font-select {
+  width:100%; background:#111; border:1px solid #1f1f1f; border-radius:8px;
+  padding:10px 14px; color:var(--white); font-size:0.85rem; letter-spacing:1px;
+  cursor:pointer; appearance:none; font-family:'Josefin Sans',sans-serif;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23555' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 12px center;
+  transition:border-color 0.2s;
+}
+.font-select:focus { outline:none; border-color:var(--accent); }
+.font-select option { background:#111; }
+.size-row { display:flex; gap:6px; }
+.size-btn {
+  flex:1; padding:9px 4px; font-family:'Josefin Sans',sans-serif;
+  font-size:0.75rem; letter-spacing:1px; background:#111; border:1px solid #1f1f1f;
+  color:var(--muted); cursor:pointer; border-radius:4px; transition:all 0.15s;
+}
+.size-btn:hover { border-color:#444; color:var(--white); }
+.size-btn.active { border-color:var(--accent); color:var(--accent); background:#1a1500; }
 </style>
 </head>
 <body>
@@ -224,6 +255,49 @@ input[type=text]::placeholder { color:#333; }
     <div>
       <div class="field-label">Frase</div>
       <textarea id="textInput" placeholder="Tu mensaje aquí…" maxlength="120"></textarea>
+    </div>
+
+    <!-- TIPOGRAFÍA PRINCIPAL -->
+    <div>
+      <div class="field-label">Tipografía principal</div>
+      <select class="font-select" id="fontMainSelect" onchange="setFontMain(this.value)">
+        <option value="Josefin Sans">Josefin Sans</option>
+        <option value="Bebas Neue">Bebas Neue</option>
+        <option value="Impact">Impact</option>
+        <option value="League Spartan">League Spartan</option>
+        <option value="Montserrat">Montserrat</option>
+        <option value="Oswald">Oswald</option>
+        <option value="Poppins">Poppins</option>
+        <option value="Raleway">Raleway</option>
+      </select>
+    </div>
+
+    <!-- TAMAÑO -->
+    <div>
+      <div class="field-label">Tamaño</div>
+      <div class="size-row">
+        <button class="size-btn" data-scale="0.65" onclick="setFontSize(this)">XS</button>
+        <button class="size-btn" data-scale="0.82" onclick="setFontSize(this)">S</button>
+        <button class="size-btn active" data-scale="1.0"  onclick="setFontSize(this)">M</button>
+        <button class="size-btn" data-scale="1.25" onclick="setFontSize(this)">L</button>
+        <button class="size-btn" data-scale="1.5"  onclick="setFontSize(this)">XL</button>
+      </div>
+    </div>
+
+    <!-- SUBTÍTULO -->
+    <div>
+      <div class="field-label">Subtítulo</div>
+      <textarea id="subtitleInput" placeholder="Subtítulo opcional…" maxlength="100" style="min-height:60px"></textarea>
+      <select class="font-select" id="fontSubSelect" onchange="setFontSub(this.value)" style="margin-top:8px">
+        <option value="Poppins">Poppins</option>
+        <option value="Josefin Sans">Josefin Sans</option>
+        <option value="Montserrat">Montserrat</option>
+        <option value="Oswald">Oswald</option>
+        <option value="Raleway">Raleway</option>
+        <option value="League Spartan">League Spartan</option>
+        <option value="Bebas Neue">Bebas Neue</option>
+        <option value="Impact">Impact</option>
+      </select>
     </div>
 
     <!-- POSICIÓN -->
@@ -294,7 +368,12 @@ const state = {
   align: 'center',
   vigType: 'none',
   vigIntensity: 0.7,
+  fontMain: 'Josefin Sans',
+  fontSub: 'Poppins',
+  fontSizeScale: 1.0,
 };
+
+const FONT_ITALIC = { 'Josefin Sans': true };  // only Josefin uses italic by default
 
 // ── Canvas utils ─────────────────────────────────────────
 function getFontSize(text, scale) {
@@ -382,8 +461,9 @@ function drawSlide(canvas, { showGuide = false } = {}) {
   if (!text) return;
 
   const fontScale = W / 405;
-  const fontSize = getFontSize(text, fontScale);
+  const fontSize = Math.round(getFontSize(text, fontScale) * state.fontSizeScale);
   const padding = W > 500 ? 100 : 40;
+  const fontStyle = FONT_ITALIC[state.fontMain] ? 'italic' : 'normal';
 
   ctx.textBaseline = 'top';
 
@@ -400,26 +480,38 @@ function drawSlide(canvas, { showGuide = false } = {}) {
   else if (state.align === 'center') textX = Math.round((zStart + zEnd) / 2);
   else                               textX = zEnd;
 
-  ctx.font = `700 italic ${fontSize}px 'Josefin Sans', sans-serif`;
+  ctx.font = `700 ${fontStyle} ${fontSize}px '${state.fontMain}', sans-serif`;
   ctx.textAlign = state.align;
 
   const lines = wrapText(ctx, text, maxW);
   const lineH = fontSize * 1.35;
 
+  // Subtítulo
+  const subtitleText = document.getElementById('subtitleInput').value.trim();
+  const subFontSize = Math.round(fontSize * 0.65);
+  let subLines = [];
+  let subH = 0;
+  if (subtitleText) {
+    ctx.font = `400 normal ${subFontSize}px '${state.fontSub}', sans-serif`;
+    subLines = wrapText(ctx, subtitleText, maxW);
+    subH = subLines.length * subFontSize * 1.4 + fontSize * 0.4;
+    ctx.font = `700 ${fontStyle} ${fontSize}px '${state.fontMain}', sans-serif`;
+  }
+
   // Firma
   const firmaEnabled = document.getElementById('firmaCheck').checked;
   const firmaText = document.getElementById('firmaInput').value.trim();
-  const firmaFontSize = Math.round(fontSize * 0.65);
+  const firmaFontSize = Math.round(fontSize * 0.5);
   let firmaLines = [];
   let firmaH = 0;
   if (firmaEnabled && firmaText) {
     ctx.font = `300 italic ${firmaFontSize}px 'Josefin Sans', sans-serif`;
     firmaLines = wrapText(ctx, firmaText, maxW);
-    firmaH = firmaLines.length * firmaFontSize * 1.4 + fontSize * 0.6;
-    ctx.font = `700 italic ${fontSize}px 'Josefin Sans', sans-serif`;
+    firmaH = firmaLines.length * firmaFontSize * 1.4 + fontSize * 0.4;
+    ctx.font = `700 ${fontStyle} ${fontSize}px '${state.fontMain}', sans-serif`;
   }
 
-  const totalH = lines.length * lineH + firmaH;
+  const totalH = lines.length * lineH + subH + firmaH;
 
   // Posición Y
   const vPad = Math.round(H * 0.12);
@@ -435,16 +527,25 @@ function drawSlide(canvas, { showGuide = false } = {}) {
   ctx.fillStyle = '#ffffff';
 
   // Texto principal
-  ctx.font = `700 italic ${fontSize}px 'Josefin Sans', sans-serif`;
+  ctx.font = `700 ${fontStyle} ${fontSize}px '${state.fontMain}', sans-serif`;
   ctx.textAlign = state.align;
   lines.forEach((line, i) => {
     ctx.fillText(line, textX, startY + i * lineH);
   });
 
+  // Subtítulo
+  if (subLines.length > 0) {
+    const sy2 = startY + lines.length * lineH + fontSize * 0.4;
+    ctx.font = `400 normal ${subFontSize}px '${state.fontSub}', sans-serif`;
+    subLines.forEach((line, i) => {
+      ctx.fillText(line, textX, sy2 + i * subFontSize * 1.4);
+    });
+  }
+
   // Firma
   if (firmaLines.length > 0) {
     ctx.font = `300 italic ${firmaFontSize}px 'Josefin Sans', sans-serif`;
-    const fy = startY + lines.length * lineH + fontSize * 0.6;
+    const fy = startY + lines.length * lineH + subH + fontSize * 0.4;
     firmaLines.forEach((line, i) => {
       ctx.fillText(line, textX, fy + i * firmaFontSize * 1.4);
     });
@@ -500,6 +601,23 @@ function setVig(type) {
 function setVigIntensity(val) {
   state.vigIntensity = val / 100;
   document.getElementById('vigLabel').textContent = val + '%';
+  render();
+}
+
+function setFontMain(val) {
+  state.fontMain = val;
+  render();
+}
+
+function setFontSub(val) {
+  state.fontSub = val;
+  render();
+}
+
+function setFontSize(btn) {
+  state.fontSizeScale = parseFloat(btn.dataset.scale);
+  document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
   render();
 }
 
@@ -563,6 +681,7 @@ document.getElementById('colorPicker').addEventListener('input', e => {
 
 // ── Texto ────────────────────────────────────────────────
 document.getElementById('textInput').addEventListener('input', render);
+document.getElementById('subtitleInput').addEventListener('input', render);
 
 // ── Descargar ────────────────────────────────────────────
 document.getElementById('btnDownload').addEventListener('click', () => {
@@ -587,7 +706,7 @@ document.getElementById('btnDownload').addEventListener('click', () => {
 
 // ── Init ─────────────────────────────────────────────────
 document.getElementById('vigSection').style.display = state.bgType === 'image' ? 'block' : 'none';
-render();
+document.fonts.ready.then(render);
 </script>
 </body>
 </html>
