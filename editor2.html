@@ -171,18 +171,15 @@ input[type=text]::placeholder { color:#333; }
   .back-link { padding:20px 20px 0; }
 }
 /* Fuentes adicionales */
-@font-face { font-family:'Poppins';        font-weight:700; font-style:normal; src:url('fonts/Poppins-700.woff2') format('woff2'); }
-@font-face { font-family:'Poppins';        font-weight:400; font-style:normal; src:url('fonts/Poppins-400.woff2') format('woff2'); }
-@font-face { font-family:'Montserrat';     font-weight:700; font-style:normal; src:url('fonts/Montserrat-700.woff2') format('woff2'); }
-@font-face { font-family:'Montserrat';     font-weight:400; font-style:normal; src:url('fonts/Montserrat-400.woff2') format('woff2'); }
-@font-face { font-family:'Oswald';         font-weight:700; font-style:normal; src:url('fonts/Oswald-700.woff2') format('woff2'); }
-@font-face { font-family:'Oswald';         font-weight:400; font-style:normal; src:url('fonts/Oswald-400.woff2') format('woff2'); }
-@font-face { font-family:'Raleway';        font-weight:700; font-style:normal; src:url('fonts/Raleway-700.woff2') format('woff2'); }
-@font-face { font-family:'Raleway';        font-weight:400; font-style:normal; src:url('fonts/Raleway-400.woff2') format('woff2'); }
-@font-face { font-family:'Bebas Neue';     font-weight:400; font-style:normal; src:url('fonts/BebasNeue-400.woff2') format('woff2'); }
-@font-face { font-family:'League Spartan'; font-weight:700; font-style:normal; src:url('fonts/LeagueSpartan-700.woff2') format('woff2'); }
-@font-face { font-family:'League Spartan'; font-weight:400; font-style:normal; src:url('fonts/LeagueSpartan-400.woff2') format('woff2'); }
-@font-face { font-family:'Cal Sans';       font-weight:400; font-style:normal; src:url('fonts/CalSans-Regular.ttf') format('truetype'); }
+@font-face { font-family:'Bebas Neue';       font-weight:400; font-style:normal; src:url('fonts/BebasNeue-400.woff2') format('woff2'); }
+@font-face { font-family:'Cal Sans';         font-weight:400; font-style:normal; src:url('fonts/CalSans-Regular.ttf') format('truetype'); }
+@font-face { font-family:'Anton';            font-weight:400; font-style:normal; src:url('fonts/Anton-400.woff2') format('woff2'); }
+@font-face { font-family:'Playfair Display'; font-weight:700; font-style:normal; src:url('fonts/PlayfairDisplay-700.woff2') format('woff2'); }
+@font-face { font-family:'Playfair Display'; font-weight:400; font-style:normal; src:url('fonts/PlayfairDisplay-400.woff2') format('woff2'); }
+@font-face { font-family:'Abril Fatface';    font-weight:400; font-style:normal; src:url('fonts/AbrilFatface-400.woff2') format('woff2'); }
+@font-face { font-family:'Dancing Script';   font-weight:700; font-style:normal; src:url('fonts/DancingScript-700.woff2') format('woff2'); }
+@font-face { font-family:'Dancing Script';   font-weight:400; font-style:normal; src:url('fonts/DancingScript-400.woff2') format('woff2'); }
+@font-face { font-family:'Sacramento';       font-weight:400; font-style:normal; src:url('fonts/Sacramento-400.woff2') format('woff2'); }
 /* Selectores de fuente y tamaño */
 .font-select {
   width:100%; background:#111; border:1px solid #1f1f1f; border-radius:8px;
@@ -272,14 +269,13 @@ input[type=text]::placeholder { color:#333; }
       <div class="field-label">Tipografía principal</div>
       <select class="font-select" id="fontMainSelect" onchange="setFontMain(this.value)">
         <option value="Josefin Sans">Josefin Sans</option>
-        <option value="Bebas Neue">Bebas Neue</option>
-        <option value="Cal Sans">Cal Sans</option>
         <option value="Impact">Impact</option>
-        <option value="League Spartan">League Spartan</option>
-        <option value="Montserrat">Montserrat</option>
-        <option value="Oswald">Oswald</option>
-        <option value="Poppins">Poppins</option>
-        <option value="Raleway">Raleway</option>
+        <option value="Bebas Neue">Bebas Neue</option>
+        <option value="Anton">Anton</option>
+        <option value="Abril Fatface">Abril Fatface</option>
+        <option value="Playfair Display">Playfair Display</option>
+        <option value="Dancing Script">Dancing Script</option>
+        <option value="Cal Sans">Cal Sans</option>
       </select>
     </div>
 
@@ -316,13 +312,11 @@ input[type=text]::placeholder { color:#333; }
       <div class="field-label">Subtítulo</div>
       <textarea id="subtitleInput" placeholder="Subtítulo opcional…" maxlength="100" style="min-height:60px"></textarea>
       <select class="font-select" id="fontSubSelect" onchange="setFontSub(this.value)" style="margin-top:8px">
-        <option value="Poppins">Poppins</option>
-        <option value="Josefin Sans">Josefin Sans</option>
+        <option value="Sacramento">Sacramento</option>
+        <option value="Dancing Script">Dancing Script</option>
+        <option value="Playfair Display">Playfair Display</option>
         <option value="Cal Sans">Cal Sans</option>
-        <option value="Montserrat">Montserrat</option>
-        <option value="Oswald">Oswald</option>
-        <option value="Raleway">Raleway</option>
-        <option value="League Spartan">League Spartan</option>
+        <option value="Josefin Sans">Josefin Sans</option>
       </select>
     </div>
 
@@ -534,6 +528,7 @@ function drawSlide(canvas, { showGuide = false } = {}) {
   const fontSize = Math.round(getFontSize(text, fontScale) * state.fontSizeScale);
   const padding = W > 500 ? 100 : 40;
   const fontStyle = FONT_ITALIC[state.fontMain] ? 'italic' : 'normal';
+  const mainWeight = fontWeight(state.fontMain);
 
   ctx.textBaseline = 'top';
 
@@ -550,7 +545,7 @@ function drawSlide(canvas, { showGuide = false } = {}) {
   else if (state.align === 'center') textX = Math.round((zStart + zEnd) / 2);
   else                               textX = zEnd;
 
-  ctx.font = `700 ${fontStyle} ${fontSize}px '${state.fontMain}', sans-serif`;
+  ctx.font = `${mainWeight} ${fontStyle} ${fontSize}px '${state.fontMain}', sans-serif`;
   ctx.textAlign = state.align;
 
   const lines = wrapText(ctx, text, maxW);
@@ -565,7 +560,7 @@ function drawSlide(canvas, { showGuide = false } = {}) {
     ctx.font = `normal 400 ${subFontSize}px '${state.fontSub}', sans-serif`;
     subLines = wrapText(ctx, subtitleText, maxW);
     subH = subLines.length * subFontSize * 1.4 + fontSize * 0.15;
-    ctx.font = `700 ${fontStyle} ${fontSize}px '${state.fontMain}', sans-serif`;
+    ctx.font = `${mainWeight} ${fontStyle} ${fontSize}px '${state.fontMain}', sans-serif`;
   }
 
   // Firma
@@ -578,7 +573,7 @@ function drawSlide(canvas, { showGuide = false } = {}) {
     ctx.font = `300 italic ${firmaFontSize}px 'Josefin Sans', sans-serif`;
     firmaLines = wrapText(ctx, firmaText, maxW);
     firmaH = firmaLines.length * firmaFontSize * 1.4 + fontSize * 0.4;
-    ctx.font = `700 ${fontStyle} ${fontSize}px '${state.fontMain}', sans-serif`;
+    ctx.font = `${mainWeight} ${fontStyle} ${fontSize}px '${state.fontMain}', sans-serif`;
   }
 
   const totalH = lines.length * lineH + subH + firmaH;
@@ -599,7 +594,7 @@ function drawSlide(canvas, { showGuide = false } = {}) {
   ctx.shadowOffsetX = 1; ctx.shadowOffsetY = 1;
 
   // Texto principal
-  ctx.font = `700 ${fontStyle} ${fontSize}px '${state.fontMain}', sans-serif`;
+  ctx.font = `${mainWeight} ${fontStyle} ${fontSize}px '${state.fontMain}', sans-serif`;
   ctx.textAlign = state.align;
   lines.forEach((line, i) => {
     fillColoredLine(ctx, line, textX, startY + i * lineH, tColor, aColor);
@@ -712,9 +707,15 @@ function setSep(btn) {
   render();
 }
 
+const FONT_WEIGHT = {
+  'Bebas Neue': 400, 'Anton': 400, 'Abril Fatface': 400,
+  'Sacramento': 400, 'Dancing Script': 700,
+};
+function fontWeight(family) { return FONT_WEIGHT[family] || 700; }
+
 function setFontMain(val) {
   state.fontMain = val;
-  document.fonts.load(`700 24px '${val}'`).then(render);
+  document.fonts.load(`${fontWeight(val)} 24px '${val}'`).then(render);
 }
 
 function setFontSub(val) {
@@ -816,12 +817,11 @@ document.getElementById('btnDownload').addEventListener('click', () => {
 document.getElementById('vigSection').style.display = state.bgType === 'image' ? 'block' : 'none';
 // Precargar todas las fuentes para que el canvas las tenga disponibles
 const FONT_PRELOAD = [
-  "700 24px 'Josefin Sans'", "700 24px 'Poppins'", "400 24px 'Poppins'",
-  "700 24px 'Montserrat'",   "400 24px 'Montserrat'",
-  "700 24px 'Oswald'",       "400 24px 'Oswald'",
-  "700 24px 'Raleway'",      "400 24px 'Raleway'",
-  "400 24px 'Bebas Neue'",   "700 24px 'League Spartan'", "400 24px 'League Spartan'",
-  "400 24px 'Cal Sans'",
+  "700 24px 'Josefin Sans'",    "400 24px 'Bebas Neue'",
+  "400 24px 'Anton'",           "400 24px 'Abril Fatface'",
+  "700 24px 'Playfair Display'","400 24px 'Playfair Display'",
+  "700 24px 'Dancing Script'",  "400 24px 'Dancing Script'",
+  "400 24px 'Sacramento'",      "400 24px 'Cal Sans'",
 ];
 Promise.all(FONT_PRELOAD.map(f => document.fonts.load(f))).then(render);
 </script>
