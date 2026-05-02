@@ -45,6 +45,7 @@ body::before {
 #previewCanvas {
   display:block; border-radius:8px;
   box-shadow:0 40px 80px rgba(0,0,0,0.8);
+  outline:none;
 }
 .empty-state {
   position:absolute; inset:0; display:flex; flex-direction:column;
@@ -285,7 +286,7 @@ function wrapText(ctx, text, maxW) {
   return lines;
 }
 
-function drawSlide(canvas) {
+function drawSlide(canvas, { showGuide = false } = {}) {
   const ctx = canvas.getContext('2d');
   const W = canvas.width, H = canvas.height;
   ctx.clearRect(0, 0, W, H);
@@ -316,11 +317,25 @@ function drawSlide(canvas) {
   const fontSize = getFontSize(text, fontScale);
   const padding = W > 500 ? 100 : 40;
 
-  ctx.font = `700 italic ${fontSize}px 'Josefin Sans', sans-serif`;
-  ctx.textAlign = state.align;
   ctx.textBaseline = 'top';
 
-  const lines = wrapText(ctx, text, W - padding * 2);
+  // Zona horizontal → define el ancho disponible y el ancla X según align
+  const zones = {
+    left:   [padding, Math.round(W * 0.60)],
+    center: [padding, W - padding],
+    right:  [Math.round(W * 0.40), W - padding],
+  };
+  const [zStart, zEnd] = zones[state.posH];
+  const maxW = zEnd - zStart;
+  let textX;
+  if (state.align === 'left')        textX = zStart;
+  else if (state.align === 'center') textX = Math.round((zStart + zEnd) / 2);
+  else                               textX = zEnd;
+
+  ctx.font = `700 italic ${fontSize}px 'Josefin Sans', sans-serif`;
+  ctx.textAlign = state.align;
+
+  const lines = wrapText(ctx, text, maxW);
   const lineH = fontSize * 1.35;
 
   // Firma
@@ -331,7 +346,7 @@ function drawSlide(canvas) {
   let firmaH = 0;
   if (firmaEnabled && firmaText) {
     ctx.font = `300 italic ${firmaFontSize}px 'Josefin Sans', sans-serif`;
-    firmaLines = wrapText(ctx, firmaText, W - padding * 2);
+    firmaLines = wrapText(ctx, firmaText, maxW);
     firmaH = firmaLines.length * firmaFontSize * 1.4 + fontSize * 0.6;
     ctx.font = `700 italic ${fontSize}px 'Josefin Sans', sans-serif`;
   }
@@ -339,17 +354,11 @@ function drawSlide(canvas) {
   const totalH = lines.length * lineH + firmaH;
 
   // Posición Y
-  const vPad = padding * 0.9;
+  const vPad = Math.round(H * 0.12);
   let startY;
   if (state.posV === 'top')    startY = vPad;
   else if (state.posV === 'middle') startY = (H - totalH) / 2;
   else                          startY = H - totalH - vPad;
-
-  // Posición X
-  let textX;
-  if (state.posH === 'left')   textX = padding;
-  else if (state.posH === 'center') textX = W / 2;
-  else                          textX = W - padding;
 
   // Sombra
   ctx.shadowColor = 'rgba(0,0,0,0.9)';
@@ -374,12 +383,23 @@ function drawSlide(canvas) {
   }
 
   ctx.shadowColor = 'transparent';
+
+  // Guía zona segura (solo preview)
+  if (showGuide) {
+    const gm = Math.round(H * 0.12);
+    ctx.save();
+    ctx.strokeStyle = 'rgba(200,169,110,0.45)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([5, 5]);
+    ctx.strokeRect(gm * 0.6, gm, W - gm * 1.2, H - gm * 2);
+    ctx.restore();
+  }
 }
 
 // ── Render ───────────────────────────────────────────────
 function render() {
   const canvas = document.getElementById('previewCanvas');
-  drawSlide(canvas);
+  drawSlide(canvas, { showGuide: true });
   const hasText = document.getElementById('textInput').value.trim().length > 0;
   const hasBg = state.bgType === 'color' || state.bgImage;
   document.getElementById('emptyState').style.display = (hasText || hasBg && state.bgImage) ? 'none' : 'flex';
